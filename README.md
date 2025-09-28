@@ -55,7 +55,8 @@ Results were saved to `results.csv` and visualized in Excel.
 | 5000 | 1,601,300      | 1,825,500      | 2,215,200   | 14,487,000       |
 
 ### Plot (Execution Time)
-![Execution Time](resources/execution_time.png)
+<img width="752" height="452" alt="image" src="https://github.com/user-attachments/assets/496668fa-b81d-4e16-b8db-3298edfe5568" />
+
 
 *(Insert your chart here – from Excel or matplotlib, saved as PNG.)*
 
