@@ -66,3 +66,6 @@ fix: edge cases (duplicates, tiny arrays)
 release: v1.0
 
 
+<img width="1018" height="451" alt="image" src="https://github.com/user-attachments/assets/1ffbd850-57df-4927-a198-1142fb942306" />
+
+
