@@ -1,71 +1,75 @@
-Design and Analysis of Algorithms
+# Design and Analysis of Algorithms – Sorting and Selection
 
-This project implements and benchmarks several fundamental algorithms using Java 17 and JUnit 5.
-The focus is on divide-and-conquer techniques, sorting, and selection problems, with clean code, tests, and CI integration.
+## 📌 Architecture Notes
+In this project, we implemented and analyzed several algorithms:
+- **MergeSort** (with cutoff to InsertionSort, buffer reuse).
+- **QuickSort** (randomized pivot, smaller-first recursion).
+- **Deterministic Select (Median-of-Medians)**.
+- **Closest Pair of Points** (divide-and-conquer).
 
-📂 Project Structure
-Implemented Algorithms
+We used a **metrics class** to track recursion depth and operations.  
+This allowed us to measure not only execution time but also recursion behavior (e.g., verifying that QuickSort depth is bounded by `~2 * floor(log₂ n)` with randomized pivots).
 
-#MergeSort
-Top-down merge sort with cutoff to insertion sort.
-Uses reusable buffer array to reduce allocations.
+---
 
-#QuickSort
-Randomized pivot.
-Always recurses on the smaller subarray first (stack depth optimization).
+## 📊 Recurrence Analysis
+Here we give the recurrence and asymptotic analysis for each algorithm.
 
-#Deterministic Select
-Median-of-Medians (MoM5) algorithm for linear-time selection.
-Tested against brute-force results.
+### MergeSort
+- **Recurrence:**  
+  T(n) = 2T(n/2) + Θ(n)  
+- **Result (Master Theorem):** Θ(n log n).  
+- Cutoff to InsertionSort improves constant factors for small `n`.
 
-#Closest Pair of Points
-Divide-and-conquer algorithm in O(n log n).
-Tested against brute-force method for correctness.
+### QuickSort (randomized pivot)
+- **Recurrence (expected):**  
+  T(n) = T(αn) + T((1-α)n) + Θ(n), where pivot splits randomly.  
+- **Result:** Θ(n log n) on average; depth bounded by `O(log n)` with high probability.  
+- Worst-case Θ(n²), but randomized pivot avoids adversarial input.
 
-Metrics & Utilities
-Track comparisons, swaps, recursion depth.
-Helpers for arrays and sorting.
-      
-Tests
+### Deterministic Select (Median-of-Medians)
+- **Recurrence:**  
+  T(n) = T(n/5) + T(7n/10) + Θ(n).  
+- **Result (Akra–Bazzi):** Θ(n).  
+- Guarantees linear worst-case selection.
 
-Unit tests are written with JUnit 5 (junit-jupiter).
-Run them with Maven:
-*mvn test*
+### Closest Pair of Points
+- **Recurrence:**  
+  T(n) = 2T(n/2) + Θ(n).  
+- **Result:** Θ(n log n).  
+- Uses divide-and-conquer with strip merging.
 
-#Tests include:
-Sorting correctness on random arrays.
-Selection correctness compared to brute-force.
-Closest Pair correctness compared to brute-force.
+---
 
-Run Benchmarks
+## 📈 Experimental Results
 
-The BenchMain class allows running experiments and outputs CSV-style metrics:
-*mvn exec:java -Dexec.mainClass="algo.app.BenchMain"*
+We measured execution time in **nanoseconds** using `System.nanoTime()`.  
+Results were saved to `results.csv` and visualized in Excel.
 
-Example output:
-*algo,n,cutoff,seed,time_ns,depth_max,comparisons,swaps,alloc_bytes
-MergeSort(cutoff=24),100000,24,42,42224000,13,1770510,0*
+### Table (excerpt)
+| Size | MergeSort (ns) | QuickSort (ns) | Select (ns) | ClosestPair (ns) |
+|------|----------------|----------------|-------------|------------------|
+| 10   | 13,342,300     | 2,480,700      | 16,443,000  | 11,451,400       |
+| 100  | 89,600         | 168,500        | 97,100      | 1,041,200        |
+| 1000 | 913,300        | 705,200        | 493,000     | 4,929,900        |
+| 5000 | 1,601,300      | 1,825,500      | 2,215,200   | 14,487,000       |
 
+### Plot (Execution Time)
+![Execution Time](resources/execution_time.png)
 
-Continuous Integration
-- CI configured via GitHub Actions.
-- Java 17, Maven build, and JUnit tests run on every pull request.
--Ensures code quality and correctness across branches.
+*(Insert your chart here – from Excel or matplotlib, saved as PNG.)*
 
-#Commit Storyline
+---
 
-init: maven, junit5, ci, readme
-feat(metrics): counters, depth tracker, CSV writer
-feat(mergesort): baseline + reuse buffer + cutoff + tests
-feat(quicksort): smaller-first recursion, randomized pivot + tests
-feat(select): deterministic select (MoM5) + tests
-feat(closest): divide-and-conquer implementation + tests
-bench(jmh): harness for select vs sort
-docs(report): master cases & AB intuition, initial plots
-fix: edge cases (duplicates, tiny arrays)
-release: v1.0
+## 📝 Summary
+- **MergeSort vs QuickSort:** Both scale as Θ(n log n), but QuickSort is slightly faster for medium `n` due to cache locality, while MergeSort is more stable.  
+- **Select:** Linear time confirmed in practice, though with larger constants.  
+- **Closest Pair:** Shows expected Θ(n log n) scaling, but constants are large due to recursive overhead.  
+- **Theory vs Experiment:** Results match theoretical complexity. Minor deviations explained by JVM overhead, caching, and constant-factor effects.
 
+---
 
-<img width="1018" height="451" alt="image" src="https://github.com/user-attachments/assets/1ffbd850-57df-4927-a198-1142fb942306" />
-
-
+## ✅ How to Run
+```bash
+# Run benchmarks
+mvn compile exec:java -Dexec.mainClass="app.BenchMain"
