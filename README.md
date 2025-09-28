@@ -58,7 +58,15 @@ Results were saved to `results.csv` and visualized in Excel.
 <img width="752" height="452" alt="image" src="https://github.com/user-attachments/assets/496668fa-b81d-4e16-b8db-3298edfe5568" />
 
 
-*(Insert your chart here – from Excel or matplotlib, saved as PNG.)*
+[results.csv](https://github.com/user-attachments/files/22581418/results.csv)Size ;MergeSort;QuickSort;Select;ClosetPair
+10;13342300;2480700;16443000;11451400
+50;113500;164500;73600;721100
+100;89600;168500;97100;1041200
+500;600100;854500;507100;3730100
+1000;913300;705200;493000;4929900
+2000;562200;1067800;1246800;6973200
+5000;1601300;18225500;2215200;14487000
+
 
 ---
 
